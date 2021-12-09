@@ -1,11 +1,19 @@
-README.Rmd
-================
-Motoi Yokota
-11/30/2021
+---
+title: "README.Rmd"
+author: "Motoi Yokota"
+date: "11/30/2021"
+output: 
+    github_document: 
+    hard_line_breaks: false 
+---
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(collapse=TRUE, comment="##")
+```
 
 # Shiny_DS_TOOL project
 
-## What is “Shiny_DS_TOOL” project
+## What is "Shiny_DS_TOOL" project
 
 -   機械学習に触れたことがなく、コーディングができない人向けのデータサイエンス体験ツールを作る
 
