@@ -19,7 +19,7 @@ knitr::opts_chunk$set(collapse=TRUE, comment="##")
 
 -   App作成過程では、{Shiny}ライブラリ操作の練習になる
 
-## Why the project is useful
+## Why this project is useful
 
 -   データサイエンスの知識が少なく、コーディングができない人のデータサイエンス体験のハードルを下げることができる。
 
@@ -46,6 +46,10 @@ knitr::opts_chunk$set(collapse=TRUE, comment="##")
     -   Side
 
         -   ファイルのアップロード
+
+        -   ヒストグラムの設定
+
+        -   散布図の設定
 
     -   Main
 
@@ -87,7 +91,7 @@ knitr::opts_chunk$set(collapse=TRUE, comment="##")
 
         -   説明変数選択
 
-        -   モデル選択（重回帰、SVR、NN、GBDT）
+        -   モデル選択（重回帰、SVM、NN、GBDT）
 
     -   Main
 

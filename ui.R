@@ -14,16 +14,9 @@ ui <- dashboardPage(
       menuItem("教師あり_回帰", 
                tabName = "tab_B", icon = icon("line-chart")),
       menuItem("教師あり_分類", 
-               tabName = "tab_C", icon = icon("th"),
-               menuSubItem("重回帰", tabName = "tab_C1", icon = icon("envira")),
-               menuSubItem("SVM", tabName = "tab_C2", icon = icon("envira")),
-               menuSubItem("ニューラルネット", tabName = "tab_C3", icon = icon("envira")),
-               menuSubItem("XGBoost", tabName = "tab_C4", icon = icon("envira"))),
+               tabName = "tab_C", icon = icon("th")),
       menuItem("教師なし", 
-               tabName = "tab_D", icon = icon("search"),
-               menuSubItem("クラスタリング", tabName = "tab_D1", icon = icon("envira")),
-               menuSubItem("ネットワーク分析", tabName = "tab_D2", icon = icon("envira")),
-               menuSubItem("主成分分析", tabName = "tab_D3", icon = icon("envira")))
+               tabName = "tab_D", icon = icon("search"))
     )
   ),
   
@@ -101,12 +94,14 @@ ui <- dashboardPage(
 
                   h3("選択済みの説明変数"),
                   verbatimTextOutput("rows_selected"),
+                  
                   selectInput("regression_type",
                               "回帰手法を選択",
                               choices = c("重回帰" = "lm",
                                           "ランダムフォレスト" = "rf",
                                           "3層ニューラルネット" = "nnet")),
-                  actionButton("regression_button", "回帰")),
+                  
+                  actionButton("regression_button", "実行")),
 
                 mainPanel(
                   tabsetPanel(type = "tabs",
@@ -117,10 +112,78 @@ ui <- dashboardPage(
                               tabPanel("回帰結果", verbatimTextOutput("summary_regression")),
 
                               tabPanel("Y-Y plot", plotOutput("plot_regression"))
+                            )
+                          )
+                        )
+                ),
+  ## 分類タブ ----
+        tabItem(tabName = "tab_C",
+                sidebarLayout(
+                  sidebarPanel(
+                    
+                    ### Input: Select a file ----
+                    h3("データセットの読込み"),
+                    fileInput("file3", "upload csv file here",
+                              multiple = FALSE,
+                              accept = c("text/csv",
+                                         "text/comma-separated-values,text/plain",
+                                         ".csv")),
+                    h3("分類を出力"),
+                    selectInput("data_for_classificationY",
+                                "目的変数を選択",
+                                choices = colnames(df), selected = colnames(df)[1]),
+                    
+                    h3("選択済みの説明変数"),
+                    verbatimTextOutput("rows_selected_classification"),
+                    
+                    selectInput("classification_type",
+                                "分類手法を選択",
+                                choices = c("ランダムフォレスト" = "rf",
+                                            "3層ニューラルネット" = "nnet")),
+                    
+                    actionButton("classification_button", "実行")
+                    ),
+                  
+                  mainPanel(
+                    tabsetPanel(type = "tabs",
+                                tabPanel("Table",
+                                         h3("説明変数を選択"),
+                                         DT::dataTableOutput("data_table_for_classification")),
+                                
+                                tabPanel("分類結果", verbatimTextOutput("summary_classification")),
+                                )
+                    )
+                  )
+                ),
+  
+  ## クラスタリングタブ ----
+        tabItem(tabName = "tab_D",
+                sidebarLayout(
+                  sidebarPanel(
+                    
+                    ### Input: Select a file ----
+                    h3("データセットの読込み"),
+                    fileInput("file4", "upload csv file here",
+                              multiple = FALSE,
+                              accept = c("text/csv",
+                                         "text/comma-separated-values,text/plain",
+                                         ".csv")),
+                    verbatimTextOutput("rows_selected_clustering"),
+                    numericInput("cluster_number", "クラスタ数を指定",
+                                 min = 1, max = 10, value = 1),
+                    actionButton("clustering_button", "クラスタリング")
+                    ),
+                  
+                  mainPanel(
+                    tabsetPanel(type = "tabs",
+                                tabPanel("Table",
+                                         h3("説明変数を選択"),
+                                         DT::dataTableOutput("data_table_for_clustering")),
+                                tabPanel("クラスタリング結果",
+                                         DT::dataTableOutput("data_with_clustering_result")))
+                    )
                   )
                 )
-              )
-      )
 
  
     )
