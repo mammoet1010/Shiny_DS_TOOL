@@ -3,7 +3,7 @@ library(MASS)
 library(kernlab)
 library(shinydashboard)
 library(DT)
-data(spam)
+
 
 server <- function(input, output, session){
   
